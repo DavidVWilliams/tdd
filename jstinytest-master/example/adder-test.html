@@ -21,9 +21,14 @@
 //   console.log(number);
 // });
 
-function forEach(array, callback) {
+function forEach(array, callback, optionalThisObject) {
+	var forEachCallback = callback;	
+	if (optionalThisObject) {
+		forEachCallback = callback.bind(optionalThisObject);
+	}
+
 	for (var i = 0; i < array.length; i++) {
-		callback(array[i], i, array);
+		forEachCallback(array[i], i, array);
 	}
 }
 
@@ -50,6 +55,11 @@ tests({
   			forEach(testArray, function(number, index, originalArray) {
   				eq(originalArray, testArray);
   	});
+  },
+  'It should be an optional this object.': function() {
+  	forEach([1], function() {
+  		eq(this.description,'I should be accessible inside of the callback.');
+  	}, {description: 'I should be accessible inside of the callback.'});
   }
 });
 </script>

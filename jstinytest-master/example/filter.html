@@ -42,9 +42,17 @@ function filter(originalArray, callback, optionalThis) {
   if (optionalThis) {
     filterCallback = callback.bind(optionalThis);
   }
+
+  var filteredArray = [];
+
   for (var i = 0; i < originalArray.length; i++) {
-    filterCallback(originalArray[i], i, originalArray);
+    if (filterCallback(originalArray[i], i, originalArray)) {
+      filteredArray.push(originalArray[i]);
+    }
   }
+
+  return filteredArray;
+
 }
 
 tests({
@@ -76,20 +84,21 @@ tests({
   		eq(this.description,'I should be accessible inside of the callback.');
   	}, {description: 'I should be accessible inside of the callback.'});
   },
-   'it should return an array.': function() {
-    var filteredArray = filter(testArray, function() {});
+   'It should return an array.': function() {
+    var filteredArray = filter([], function() {});
     eq(Array.isArray(filteredArray), true);
   },
   'it should return a new array, not the array being filtered.': function() {
-    var testArray = [];
-    var filteredArray = filter(testArray, function() {});
-    // filteredArray is actually an Array.
-    eq(Array.isArray(filteredArray), true);
-    // filteredArray is not equal to testArray.
-    eq(filtered !== testArray, true);
+    var arrayBeingFiltered = [];
+    var filteredArray = filter(arrayBeingFiltered, function() {});
+    eq(filteredArray !== arrayBeingFiltered, true);
   },
-  'It should return a new array that only has elements where callback() is true.': function() {
-    fail();
+  'It should return a new array that only has elements where callback returns true.': function() {
+    var filteredArray = filter([1, 2], function(number) {
+      return number > 1;
+    });
+    eq(filteredArray.length, 1);
+    eq(filteredArray[0], 2);
   }
 });
 </script>

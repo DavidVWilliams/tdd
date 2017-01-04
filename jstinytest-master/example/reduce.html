@@ -27,38 +27,30 @@
 			// Returns a single value.
 
 			// Requirements:
-			// Executes the callback function once for each element present in the array
-			// Excludes holes in the array (e.g [/* hole */, 1])
 
-			// Case A: initialValue provided
-			  //  previousValue will be equal to initialValue.
-			  //  currentValue will be equal to the first value in the array.
+			// If initialValue, previous value should start with initialValue.
+			// If initialValue, currentValue should start with array[0].
+			// If initialValue, callback will start at index 0.
 
-			  // callback will start at index 0.
+			// If no initialValue, previousValue should start with array[0].
+			// If no initialValue, currentValue should start with array[1].
+			// If no initialValue, callback will start at index 1.
 
-			// Case B: initialValue not provide
-			  // previousValue will be equal to the first value in the array.
-			//  currentValue will be equal to the second.
+			// If initialValue and array is empty, return initialValue without calling callback.		
+			// If no initialValue and array has one element, it should return only element without calling callback.
 
-			// callback will start at index 1, which is the second element.
+			// It should actually reduce.
+			// It should exclude holes.
+			// If array is empty, and no initialValue, throw TypeError.
+			// It should pass array as fourth argument to callback.
 
-// Edge cases.
-  // If array is empty and no initialValue was provided, TypeError should be thrown.
-  // reduce([]), function(){} ==> TypeError
 
-  // If array has one element (regardless of position) and no initialValue is provided but the array is empty, the solo value would be returned, without calling callback.
 
-  // reduce([/* hole */, 1]), function() {})
-  // return 1 without calling callback
 
-  // reduce([1]), function() {})
-  // return 1 without calling callback
 
-  // reduce([]), function() {}, 0)
-  // return 0 without calling callback
 
-  // reduce([/* hole */, /* hole */]), function() {}, 0)
-  // return 0 without calling callback
+
+
 
 		</script>
 </head>
